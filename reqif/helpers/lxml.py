@@ -103,6 +103,8 @@ def lxml_stringify_namespaced_children(node, namespace_tag=None) -> str:
             if node.text is not None:
                 output += lxml_escape_for_html(node.text)
             for child in node.getchildren():
+                if lxml_is_comment_node(child):
+                    continue
                 output += _lxml_stringify_reqif_ns_node(child)
             output += f"</{tag}>"
         else:
@@ -141,6 +143,8 @@ def lxml_stringify_node(node):
         if node.text is not None:
             output += lxml_escape_for_html(node.text)
         for child in node.getchildren():
+            if lxml_is_comment_node(child):
+                continue
             output += lxml_stringify_node(child)
         output += f"</{tag}>"
     else:
