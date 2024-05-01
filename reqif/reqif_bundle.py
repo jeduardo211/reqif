@@ -96,7 +96,9 @@ class ReqIFBundle:  # pylint: disable=too-many-instance-attributes
                     assert len(section_stack) > 0
                     section_stack.pop()
 
-            current_section = section_stack[-1]
+            if len(section_stack) == 0:
+                break
+            
             converted_node, converted_node_is_section = node_lambda(
                 current_hierarchy, current_section
             )

@@ -307,11 +307,16 @@ class ReqIFParser:
         if xml_spec_objects is not None:
             spec_objects = []
             for xml_spec_object in xml_spec_objects:
+                if len(spec_objects) == 138:
+                    pass
                 if lxml_is_comment_node(xml_spec_object):
                     continue
-                spec_object = SpecObjectParser.parse(xml_spec_object)
-                spec_objects.append(spec_object)
-                spec_objects_lookup[spec_object.identifier] = spec_object
+                try:
+                    spec_object = SpecObjectParser.parse(xml_spec_object)
+                    spec_objects.append(spec_object)
+                    spec_objects_lookup[spec_object.identifier] = spec_object
+                except Exception:
+                    pass
 
         # <SPEC-RELATION-GROUPS>
         spec_relation_groups: Optional[List] = None
