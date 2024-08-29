@@ -96,12 +96,16 @@ class ReqIFBundle:
                     assert len(section_stack) > 0
                     section_stack.pop()
 
-            current_section = section_stack[-1]
-            converted_node, converted_node_is_section = node_lambda(
-                current_hierarchy, current_section
-            )
-            if converted_node_is_section:
-                section_stack.append(converted_node)
+            try:
+                current_section = section_stack[-1]
+            
+                converted_node, converted_node_is_section = node_lambda(
+                    current_hierarchy, current_section
+                )
+                if converted_node_is_section:
+                    section_stack.append(converted_node)
+            except IndexError:
+                break
 
     def get_spec_object_by_ref(self, ref) -> ReqIFSpecObject:
         return self.lookup.get_spec_object_by_ref(ref)
